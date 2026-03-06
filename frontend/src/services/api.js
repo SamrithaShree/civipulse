@@ -2,31 +2,15 @@ import axios from 'axios';
 
 const BASE_URL = 'http://localhost:3001';
 
-const api = axios.create({
-    baseURL: BASE_URL,
-    timeout: 10000,
-});
+const api = axios.create({ baseURL: BASE_URL, timeout: 10000 });
 
-/** Fetch all raw incidents */
-export async function getIncidents() {
-    const res = await api.get('/incidents');
-    return res.data;
-}
+export const getIncidents = () => api.get('/incidents').then((r) => r.data);
+export const getPrioritizedIncidents = () => api.get('/incidents/prioritized').then((r) => r.data);
+export const getResources = () => api.get('/resources').then((r) => r.data);
+export const getRecommendations = () => api.get('/incidents/recommendations').then((r) => r.data);
 
-/** Fetch incidents sorted by priority score */
-export async function getPrioritizedIncidents() {
-    const res = await api.get('/incidents/prioritized');
-    return res.data;
-}
-
-/** Fetch all response resources */
-export async function getResources() {
-    const res = await api.get('/resources');
-    return res.data;
-}
-
-/** Fetch response recommendations */
-export async function getRecommendations() {
-    const res = await api.get('/incidents/recommendations');
-    return res.data;
-}
+// ── Simulation endpoints ─────────────────────────────────────
+export const simulateIncident = (body = {}) => api.post('/simulate/incident', body).then((r) => r.data);
+export const simulateResourceBusy = (body = {}) => api.post('/simulate/resource-busy', body).then((r) => r.data);
+export const simulateResourceFree = (body = {}) => api.post('/simulate/resource-free', body).then((r) => r.data);
+export const simulateDemoScenario = () => api.post('/simulate/demo-scenario').then((r) => r.data);

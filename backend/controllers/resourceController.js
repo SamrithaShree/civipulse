@@ -1,6 +1,6 @@
-const resources = require('../data/resources');
+const { resources } = require('../data/store');
 
-/** GET /resources — return all response resources */
+/** GET /resources */
 function getAllResources(req, res) {
     res.json(resources);
 }

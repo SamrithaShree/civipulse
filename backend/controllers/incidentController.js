@@ -1,23 +1,20 @@
-const incidents = require('../data/incidents');
+const { incidents, resources } = require('../data/store');
 const { getPrioritizedIncidents } = require('../services/priorityEngine');
 const { generateRecommendations } = require('../services/recommendationEngine');
-const resources = require('../data/resources');
 
-/** GET /incidents — return all raw incidents */
+/** GET /incidents */
 function getAllIncidents(req, res) {
     res.json(incidents);
 }
 
-/** GET /prioritized-incidents — return incidents sorted by priority score */
+/** GET /incidents/prioritized */
 function getPrioritized(req, res) {
-    const prioritized = getPrioritizedIncidents(incidents);
-    res.json(prioritized);
+    res.json(getPrioritizedIncidents(incidents));
 }
 
-/** GET /recommendations — return response recommendations for open incidents */
+/** GET /incidents/recommendations */
 function getRecommendations(req, res) {
-    const recommendations = generateRecommendations(incidents, resources);
-    res.json(recommendations);
+    res.json(generateRecommendations(incidents, resources));
 }
 
 module.exports = { getAllIncidents, getPrioritized, getRecommendations };
